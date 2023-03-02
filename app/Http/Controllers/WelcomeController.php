@@ -10,9 +10,5 @@ class WelcomeController extends Controller
     public function index() {
         return  $this->render('welcome');
     }
-    
-    public function store(Request $request) {
-        dd($request->all());
-    }
    
 }

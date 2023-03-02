@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Core\Application;
 class Request
 {
     public function path()
@@ -45,5 +46,10 @@ class Request
     public function isPost()
     {
         return $this->method() === 'post';
+    }
+
+    public function validate(array $fields)
+    {
+        Application::$app->validator->validate($fields);
     }
 }
