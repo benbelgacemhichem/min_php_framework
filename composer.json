@@ -1,0 +1,18 @@
+{
+    "name": "benbelgacemhichem/mini_framework",
+    "description": "Mini php framework",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "benbelgacemhichem",
+            "email": "benbelgacemhichem@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
