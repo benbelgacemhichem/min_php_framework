@@ -6,5 +6,5 @@ use App\Http\Controllers\AuthController;
 
 Router::get('/',[WelcomeController::class, 'index']);
 Router::get('/register',[AuthController::class, 'index']);
-Router::post('/register',[AuthController::class, 'create']);
+Router::post('/register',[AuthController::class, 'store']);
 

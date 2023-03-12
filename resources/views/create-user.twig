@@ -1,3 +1,10 @@
+{% extends "layouts/main.twig" %}
+{% block content %}
+
+{% for user in users %}
+    <li>{{ user.username|e }}</li>
+{% endfor %}
+
 <h1>Create user</h1>
 
 <div class="w-full max-w-md mt-5">
@@ -27,3 +34,5 @@
         </div>
     </form>
 </div>
+
+{% endblock %}

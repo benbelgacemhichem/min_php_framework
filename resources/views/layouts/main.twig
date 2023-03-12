@@ -1,10 +1,11 @@
-<?php require base_path('/resources/views/partials/header.php') ?>
-<?php require base_path('/resources/views/partials/nav.php') ?>
+{% include  'partials/header.twig' %}
+{% include  'partials/nav.twig'  %}
+
 
 <main>
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-        {{content}}
+       {% block content %}{% endblock %}
     </div>
 </main>
 
-<?php require base_path('/resources/views/partials/footer.php') ?>
+{% include 'partials/footer.twig'  %}

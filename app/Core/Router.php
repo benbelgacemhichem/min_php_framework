@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Core;
+
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+
 class Router
 {
     public Request $request;
@@ -29,56 +31,27 @@ class Router
     {
         $path = $this->request->path();
         $method = ($this->request->method());
-
         $callback = self::$routes[$method][$path] ?? false;
-
         if ($callback === false) {
             abort(404);
         }
-
         if (is_string($callback)) {
             return $this->renderView($callback);
         }
-
         if (is_array($callback)) {
             Application::$app->controller = new $callback[0]();
             $callback[0] = Application::$app->controller;
         }
-
         return call_user_func($callback, $this->request, $this->response);
     }
 
     public function renderView($view, $params = [])
     {
-        $layoutContent = $this->layoutContent();
-        $viewContent = $this->renderViewOnly($view, $params);
-
-        return str_replace('{{content}}', $viewContent, $layoutContent);
-    }
-
-    protected function layoutContent()
-    {
-        $layout = Application::$app->controller->layout;
-
-        ob_start();
-        include_once base_path("/resources/views/layouts/$layout.twig");
-        return ob_get_clean();
-    }
-
-    protected function renderViewOnly($view, $params)
-    {
         foreach ($params as $key => $value) {
             $$key = $value;
         }
-
-        ob_start();
-        // include_once base_path("resources/views/$view.view.php");
-
         $loader = new FilesystemLoader(base_path("resources/views"));
         $twig = new Environment($loader);
-
         echo $twig->render("$view.twig", $params);
-
-        return ob_get_clean();
     }
 }
