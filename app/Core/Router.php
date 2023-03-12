@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Core;
-
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 class Router
 {
     public Request $request;
@@ -60,7 +61,7 @@ class Router
         $layout = Application::$app->controller->layout;
 
         ob_start();
-        include_once base_path("/resources/views/layouts/$layout.php");
+        include_once base_path("/resources/views/layouts/$layout.twig");
         return ob_get_clean();
     }
 
@@ -71,7 +72,13 @@ class Router
         }
 
         ob_start();
-        include_once base_path("resources/views/$view.view.php");
+        // include_once base_path("resources/views/$view.view.php");
+
+        $loader = new FilesystemLoader(base_path("resources/views"));
+        $twig = new Environment($loader);
+
+        echo $twig->render("$view.twig", $params);
+
         return ob_get_clean();
     }
 }

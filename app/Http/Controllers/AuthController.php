@@ -13,11 +13,10 @@ class AuthController extends Controller
     {
         $users = User::all();
 
-        // $user = User::find(2);
+        $user = User::find(2);
         
         // $user = User::where('username', 'test');
 
-        dd($user);
 
         return  $this->render('create-user', compact('users'));
     }

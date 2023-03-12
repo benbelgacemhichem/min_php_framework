@@ -49,7 +49,7 @@ abstract class Model
 
         return self::prepareSQL("SELECT * from $tableName")->fetchAll();
     }
-
+    
     public static function find($id)
     {
         $tableName = static::tableName();
