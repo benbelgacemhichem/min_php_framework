@@ -77,11 +77,13 @@ class Database
 
     }
 
-    public function query($query)
+    public function query($query, $execute = true)
     {
         $statement = $this->connection->prepare($query);
 
-        $statement->execute();
+        if($execute) {
+            $statement->execute();
+        }
 
         return $statement;
     }
