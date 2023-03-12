@@ -7,10 +7,12 @@ require_once __DIR__ . '/app/Core/Console/Info.php';
 use Symfony\Component\Console\Application;
 use App\Core\Console\Info;
 use App\Core\Console\Migration;
+use App\Core\Console\MigrationFresh;
 
 $console = new Application();
 
 $console->add(new Info());
 $console->add(new Migration());
+$console->add(new MigrationFresh());
 
 $console->run();

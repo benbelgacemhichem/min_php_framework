@@ -15,7 +15,6 @@ class m_2023_03_04_000000_create_users_table extends Migration
 
     public function down()
     {
-        echo 'Down migration' . PHP_EOL;
-        // Migration::dropIfExists('users');
+        Migration::dropIfExists('users');
     }
 };

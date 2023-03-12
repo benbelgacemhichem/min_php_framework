@@ -52,6 +52,13 @@ class Database
             ]; 
         }
     } 
+    public function refresh()
+    {
+        return [
+            "success",
+            "Done 🎉🎉"
+        ]; 
+    }
 
     public function creaetMigrationTable()
     {
@@ -79,12 +86,14 @@ class Database
 
     public function query($query, $execute = true)
     {
-        $statement = $this->connection->prepare($query);
-
-        if($execute) {
-            $statement->execute();
+        try {
+            $statement = $this->connection->prepare($query);
+            if ($execute) {
+                $statement->execute();
+            }
+            return $statement;
+        } catch (Exception) {
+            throw new Exception();
         }
-
-        return $statement;
     }
 }

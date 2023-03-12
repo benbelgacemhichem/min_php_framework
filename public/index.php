@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\Application;
+use Spatie\Ignition\Ignition;
 
 const BASE_PATH = __DIR__ . '/../';
 
@@ -8,6 +9,8 @@ require BASE_PATH . 'vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
 $dotenv->load();
+
+Ignition::make()->register();
 
 require  BASE_PATH . 'app/Core/functions.php';
 

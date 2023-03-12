@@ -9,15 +9,24 @@ abstract class Migration
     public function __construct()
     {
 
+        $BASE_PATH = __DIR__ . '/../../';
+
+        $dotenv = \Dotenv\Dotenv::createImmutable($BASE_PATH);
+        $dotenv->load();
+
         $db_config  =  [
-            'host' =>  '127.0.0.1',
-            'port' => 3306,
-            'database' => 'mini_framework',
-            'username' => 'root',
-            'password' =>  'password',
+            'host' => $_ENV['DB_HOST'],
+            'port' => $_ENV['DB_PORT'],
+            'database' =>  $_ENV['DB_DATABASE'],
+            'username' => $_ENV['DB_USERNAME'],
+            'password' => $_ENV['DB_PASSWORD'],
             'charset' => 'utf8mb4',
         ];
 
         $this->db = new \App\Core\Database($db_config);
+    }
+
+    public static function dropIfExists($tableName) {
+        
     }
 }

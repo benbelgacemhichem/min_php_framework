@@ -15,8 +15,7 @@ class AuthController extends Controller
 
         $user = User::find(2);
         
-        // $user = User::where('username', 'test');
-
+        $user = User::where('username', 'test');
 
         return  $this->render('create-user', compact('users'));
     }

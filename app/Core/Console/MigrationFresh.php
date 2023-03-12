@@ -7,11 +7,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class Migration extends Command
+class MigrationFresh extends Command
 {
-    protected static $defaultName = 'migrate';
+    protected static $defaultName = 'migrate:fresh';
 
-    protected static $defaultDescription = 'Migrate the database tables!';
+    protected static $defaultDescription = 'Refresh database migration!';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -33,7 +33,7 @@ class Migration extends Command
 
         $db = new \App\Core\Database($db_config);
 
-        $result = $db->applayMigrations();
+        $result = $db->refresh();
 
         if($result[0] === 'success'){
             $io->success($result[1]); 

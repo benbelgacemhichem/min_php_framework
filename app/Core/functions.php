@@ -1,23 +1,23 @@
 <?php
 
-function dd($value)
-{
-    echo "<pre>";
-    var_dump($value);
-    echo "</pre>";
+// function dd($value)
+// {
+//     echo "<pre>";
+//     var_dump($value);
+//     echo "</pre>";
 
-    die();
-}
+//     die();
+// }
 
 function base_path($path)
 {
     return BASE_PATH . $path;
 }
 
-function env($value)
-{
-    return $_ENV[$value];
-}
+// function env($value)
+// {
+//     return $_ENV[$value];
+// }
 
 function abort($code = 404)
 {
