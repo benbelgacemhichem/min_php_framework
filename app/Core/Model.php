@@ -6,15 +6,16 @@ use App\Core\Application;
 
 abstract class Model
 {
-    public function loadData($data) {
-        foreach($data as $key => $value) {
-            if(property_exists($this, $key)) {
+    public function loadData($data)
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
         }
     }
 
-    abstract public function tablaName(): string;
+    abstract public static function tableName(): string;
     abstract public function attributes(): array;
 
     public function save($data)
@@ -22,7 +23,7 @@ abstract class Model
         try {
             $this->loadData($data);
 
-            $tableName = $this->tablaName();
+            $tableName = $this->tableName();
             $attributes = $this->attributes();
 
             $params = array_map(fn ($attr) => ":$attr", $attributes);
@@ -40,11 +41,31 @@ abstract class Model
             echo 'Caught exception: ',  $e->getMessage(), "\n";
             return false;
         }
-
-        
     }
 
-    public static function prepareSQL($sql, $execute) {
+    public static function all()
+    {
+        $tableName = static::tableName();
+
+        return self::prepareSQL("SELECT * from $tableName")->fetchAll();
+    }
+
+    public static function find($id)
+    {
+        $tableName = static::tableName();
+
+        return self::prepareSQL("SELECT * from $tableName WHERE id = $id")->fetch();
+    }
+
+    public static function where($field, $value)
+    {
+        $tableName = static::tableName();
+
+        return self::prepareSQL("SELECT * from $tableName WHERE $field = '$value'")->fetch();
+    }
+
+    private static function prepareSQL($sql, $execute = true)
+    {
         return Application::$app->db->query($sql, $execute);
     }
 }

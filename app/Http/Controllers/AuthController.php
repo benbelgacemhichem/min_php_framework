@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Application;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Models\User;
@@ -10,9 +11,17 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return  $this->render('create-user');
+        $users = User::all();
+
+        // $user = User::find(2);
+        
+        // $user = User::where('username', 'test');
+
+        dd($user);
+
+        return  $this->render('create-user', compact('users'));
     }
-    
+
     public function create(Request $request)
     {
         $user = new User();
