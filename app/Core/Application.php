@@ -5,6 +5,7 @@ namespace App\Core;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Twig\TwigFunction;
+
 class Application
 {
     public Router $router;
@@ -26,8 +27,8 @@ class Application
             return Application::$app->request->path($_SERVER['REQUEST_URI']);
         });
         $asset = new TwigFunction('asset', function ($filePath) {
-                return env('APP_URL', 'http://localhost:8000') . '/' . $filePath;
-            });
+            return env('APP_URL' . $_SERVER['SERVER_PORT'], 'http://localhost:' . $_SERVER['SERVER_PORT']) . '/' . $filePath;
+        });
         $this->twig->addFunction($getUri);
         $this->twig->addFunction($asset);
 
