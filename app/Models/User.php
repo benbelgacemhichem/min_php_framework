@@ -6,7 +6,6 @@ use App\Core\Model;
 
 class User extends Model
 {
-    public int $id;
     public string $username;
     public string $email;
 
@@ -16,7 +15,7 @@ class User extends Model
     
     public function attributes(): array
     {
-        return ['id', 'username', 'email'];
+        return ['username', 'email'];
     }
     
 }

@@ -4,13 +4,11 @@ namespace App\Core;
 
 abstract class Migration
 {
-    public $db;
+    public static $db;
 
     public function __construct()
     {
-
         $BASE_PATH = __DIR__ . '/../../';
-
         $dotenv = \Dotenv\Dotenv::createImmutable($BASE_PATH);
         $dotenv->load();
 
@@ -23,10 +21,10 @@ abstract class Migration
             'charset' => 'utf8mb4',
         ];
 
-        $this->db = new \App\Core\Database($db_config);
+        self::$db = new \App\Core\Database($db_config);
     }
 
     public static function dropIfExists($tableName) {
-        
+       self::$db->query("DROP TABLE IF EXISTS $tableName");
     }
 }

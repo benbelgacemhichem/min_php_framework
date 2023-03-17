@@ -17,7 +17,7 @@ class Database
         ]);
     }
 
-    public function applayMigrations()
+    public function applayMigrations($refresh = false)
     {
         $migration_path = __DIR__ . '/../../database/migrations';
         self::creaetMigrationTable();
@@ -51,13 +51,38 @@ class Database
                 "All migrations are applied 🎉🎉"
             ]; 
         }
+
+        if(!$refresh) {
+            return [
+                "success",
+                "All migrations are applied successfully ✅"
+            ];
+        }
     } 
     public function refresh()
     {
+        self::cleanMigarationsTable();
+
+        $migration_path = __DIR__ . '/../../database/migrations';
+        $migrations = scandir($migration_path);
+
+        foreach ($migrations as $migration) {
+            if ($migration === '.' || $migration === '..') {
+                continue;
+            }
+
+            require_once "$migration_path/$migration";
+            $migrationClassName = pathinfo($migration, PATHINFO_FILENAME);
+
+            $migrationInstance = new $migrationClassName();
+            $migrationInstance->down();
+        }
+        self::applayMigrations(true);
+
         return [
             "success",
-            "Done 🎉🎉"
-        ]; 
+            "All migrations are applied successfully ✅ (fresh databse)"
+        ];
     }
 
     public function creaetMigrationTable()
@@ -78,10 +103,13 @@ class Database
     {
         $migrations = implode(',',array_map(fn($m) => "('$m')", $migrations));
 
-        return  self::query("INSERT INTO migrations (migration) VALUES (
-            $migrations
-        )");
+        return  self::query("INSERT INTO migrations (migration) VALUES $migrations");
 
+    }
+    
+    public function cleanMigarationsTable()
+    {
+        return  self::query("DELETE FROM migrations");
     }
 
     public function query($query, $execute = true)

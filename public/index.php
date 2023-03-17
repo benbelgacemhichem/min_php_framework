@@ -5,14 +5,17 @@ use Spatie\Ignition\Ignition;
 
 const BASE_PATH = __DIR__ . '/../';
 
+function base_path($path)
+{
+    return BASE_PATH . $path;
+}
+
 require BASE_PATH . 'vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
 $dotenv->load();
 
 Ignition::make()->register();
-
-require  BASE_PATH . 'app/Core/functions.php';
 
 $db_config  = require base_path('app/config/database.php');
 

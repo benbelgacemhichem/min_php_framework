@@ -2,8 +2,7 @@
 
 namespace App\Core;
 
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
+
 
 class Router
 {
@@ -33,7 +32,10 @@ class Router
         $method = ($this->request->method());
         $callback = self::$routes[$method][$path] ?? false;
         if ($callback === false) {
-            abort(404);
+            $code = 404;
+            http_response_code($code);
+            echo Application::$app->twig->render("errors/{$code}.html.twig");
+            die();
         }
         if (is_string($callback)) {
             return $this->renderView($callback);
@@ -50,8 +52,7 @@ class Router
         foreach ($params as $key => $value) {
             $$key = $value;
         }
-        $loader = new FilesystemLoader(base_path("resources/views"));
-        $twig = new Environment($loader);
-        echo $twig->render("$view.twig", $params);
+        $viewPath = str_replace(".", "/", $view);
+        echo Application::$app->twig->render("$viewPath.html.twig", $params);
     }
 }

@@ -12,7 +12,7 @@ class AuthController extends Controller
     {
         $users = User::all();
 
-        $user = User::find(2);
+        // $user = User::find(2);
         
         // $user = User::where('username', 'test');
 
@@ -26,5 +26,10 @@ class AuthController extends Controller
         $user->save($request->all());
 
         dd($user);
+    }
+
+    public function getUsers() 
+    {
+        return  $this->render('users.index');
     }
 }
