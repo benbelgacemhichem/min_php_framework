@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-
-
 class Router
 {
     public Request $request;
@@ -16,9 +14,18 @@ class Router
         $this->response = $response;
     }
 
+    public function add($path, $callback) {
+        $this->$routes['get'][$path] = $callback;
+    }
+
     public static function get($path, $callback)
     {
-        self::$routes['get'][$path] = $callback;
+       self::$routes['get'][$path] = $callback;
+    }
+    
+    public function middleware($key)
+    {
+        dd(1);
     }
 
     public static function post($path, $callback)
@@ -31,12 +38,19 @@ class Router
         $path = $this->request->path();
         $method = ($this->request->method());
         $callback = self::$routes[$method][$path] ?? false;
+
+        self::$routes = self::$routes[$method];
+
+        $path = trim($path, '/');
+
+
         if ($callback === false) {
             $code = 404;
             http_response_code($code);
             echo Application::$app->twig->render("errors/{$code}.html.twig");
             die();
         }
+        
         if (is_string($callback)) {
             return $this->renderView($callback);
         }

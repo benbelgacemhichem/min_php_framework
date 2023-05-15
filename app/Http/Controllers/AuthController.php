@@ -11,25 +11,42 @@ class AuthController extends Controller
     public function index()
     {
         $users = User::all();
-
-        // $user = User::find(2);
-        
-        // $user = User::where('username', 'test');
-
-        return  $this->render('create-user', compact('users'));
+        return  $this->render('users.index', compact('users'));
     }
 
+    public function show(Request $request)
+    {
+        $user = User::find($request->id);
+        return  $this->render('users.details', compact('user'));
+    }
+
+    public function create()
+    {
+        return  $this->render('users.create');
+    }
+    
+    public function test()
+    {
+        return  $this->render('test');
+    }
+   
     public function store(Request $request)
     {
         $user = new User();
-
         $user->save($request->all());
-
-        dd($user);
     }
 
-    public function getUsers() 
+    public function edit(Request $request) 
     {
-        return  $this->render('users.index');
+        // dd($request->getRouteParams(),$request->getRouteParam('id'));
+        return  $this->render('users.edit');
+    }
+    
+    public function update(Request $request) 
+    {
+    }
+   
+    public function destroy(Request $request) 
+    {
     }
 }

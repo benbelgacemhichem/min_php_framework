@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-class View
+class Middleware
 {
-    
+
 }

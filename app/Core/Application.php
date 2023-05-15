@@ -10,6 +10,7 @@ class Application
 {
     public Router $router;
     public $twig;
+    public $blade;
     public Request $request;
     public Response $response;
     public static Application $app;
@@ -29,8 +30,14 @@ class Application
         $asset = new TwigFunction('asset', function ($filePath) {
             return env('APP_URL' . $_SERVER['SERVER_PORT'], 'http://localhost:' . $_SERVER['SERVER_PORT']) . '/' . $filePath;
         });
+
+        $translation = new TwigFunction('__', function ($str) {
+            return translate($str);
+        });
+
         $this->twig->addFunction($getUri);
         $this->twig->addFunction($asset);
+        $this->twig->addFunction($translation);
 
         $this->db = new Database($db_config);
         $this->validator = new Validator();
