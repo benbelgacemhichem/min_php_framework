@@ -10,17 +10,16 @@ class Application
 {
     public Router $router;
     public $twig;
-    public $blade;
     public Request $request;
     public Response $response;
     public static Application $app;
     public Controller $controller;
     public Database $db;
     public Validator $validator;
-
     public function __construct($db_config)
     {
         self::$app = $this;
+
         // Twig Config
         $loader = new FilesystemLoader(base_path("resources/views"));
         $this->twig = new Environment($loader, ['debug' => true]);
